@@ -1,0 +1,29 @@
+use_frameworks!
+
+##忽略.cocoapods中多个specs源引起的警告问题
+install! 'cocoapods', :warn_for_unused_master_specs_repo => false
+
+inhibit_all_warnings!
+
+# Uncomment the next line to define a global platform for your project
+platform :ios, '15.0'
+
+target 'ZHHProgressHUD_Example' do
+  pod 'ZHHProgressHUD', :path => '../'
+  # 调试工具（仅 Debug 下生效）
+  pod 'LookinServer', :subspecs => ['Swift'], :configurations => ['Debug']  # 自定义的服务器配置（仅在 Debug 模式下使用）
+
+  target 'ZHHProgressHUD_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['SWIFT_VERSION'] = '5.0'
+    end
+  end
+end

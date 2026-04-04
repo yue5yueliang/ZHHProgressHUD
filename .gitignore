@@ -1,3 +1,11 @@
+# CocoaPods
+Pods
+!Podfile
+!Podfile.lock
+
+# Cursor IDE
+.cursor/
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
