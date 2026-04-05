@@ -30,12 +30,10 @@ final class ExampleDemoViewController: UIViewController {
         title = "HUD 演示"
 
         configNavigationBarAppearance()
-        // 关闭当前 HUD 并停止进度定时器；系统栏按钮在中文环境下多为「取消」
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel,
-            target: self,
-            action: #selector(onDismissHUD)
-        )
+        // 「取消」右侧；其左侧为 OC 纯动画演示入口
+        let ocItem = UIBarButtonItem(title: "OC动画", style: .plain, target: self, action: #selector(onOpenOCAnimations))
+        let cancelItem = UIBarButtonItem(title: "取消", style: .plain, target: self, action: #selector(onDismissHUD))
+        navigationItem.rightBarButtonItems = [cancelItem, ocItem]
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         // 铺满安全区下主区域，底部贴齐根视图（与 Home 条共存时表格可滚到底）
@@ -52,6 +50,10 @@ final class ExampleDemoViewController: UIViewController {
     /// 导航栏「取消」：隐藏 HUD 并作废进度演示定时器
     @objc private func onDismissHUD() {
         viewModel.dismissAllHUD()
+    }
+
+    @objc private func onOpenOCAnimations() {
+        navigationController?.pushViewController(ExampleOCAnimationsListViewController(), animated: true)
     }
 
     /// 与 `standardAppearance` 统一，避免 ScrollView 滚到边缘时导航栏变透明或变色
